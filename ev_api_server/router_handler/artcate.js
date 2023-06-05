@@ -97,7 +97,7 @@ exports.getArtCateById = (req, res) => {
   });
 };
 
-// 根据Id更新文章分类的处理函数
+// 根据 Id 更新文章分类的处理函数
 exports.updateCateById = (req, res) => {
   // 定义查重的 SQL 语句
   const sql = `select * from ev_article_cate where Id<>? and (name=? or alias=?)`;
@@ -128,7 +128,10 @@ exports.updateCateById = (req, res) => {
       // 执行更新文章分类的 SQL 语句
       db.query(sql, [req.body, req.body.Id], (err, results) => {
         if (err) return res.cc(err);
-        if (results.affectedRows !== 1) return res.cc("更新文章分类失败！");
+        if (results.affectedRows !== 1)
+          return res.cc(
+            "更新文章分类失败！(router_handler/artcate[执行更新文章分类的 SQL 语句]报出错误)"
+          );
         res.cc("更新文章分类成功！", 0);
       });
     }
